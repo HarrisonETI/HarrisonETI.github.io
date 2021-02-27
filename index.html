@@ -1,1 +1,96 @@
-"Hello world"  
+<html>
+    <head>
+        <title>Group 1</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <link rel="manifest" href="afterschool.webmanifest">
+        <link rel="component" href="lesson.html">
+        <link rel="component" href="cart.html">
+
+        <script>
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('service-worker.js');
+            };
+        </script>
+    </head>
+    <body>
+        <div class="container-sm">
+            <div class="col-sm-12">
+                <div class="card" style="padding: 10px; margin-bottom: 10px; margin-top: 10px;">
+                    <div id="app">
+                        <header>
+                            <h1> {{ sitename }}</h1>
+                            <button class="btn btn-secondary" style="float: right;" v-on:click='showCheckout'>{{cartItemCount}} 
+                                Checkout</button>
+                        </header>
+                        <main>
+                            <div V-if= 'showProduct'>
+                                <figure>
+                                    <img v-bind:src="product.image">
+                                </figure>
+                                <h2 v-text ="product.title"></h2>
+                                <p v-text ="product.description"></p>
+                                <p> Location: {{product.location}}</p>
+                                <p> Spaces: <v-on:click>{{cartItemCount}} </p>
+                                <p> Price: {{ product.price }}</p>
+                                <!-- This button would display when 'Add to cart is true'-->
+                                <button class="btn btn-secondary"v-on:click='addToCart' v-if='canAddToCart'> Add to Cart</button>
+                                
+                                <!-- This button will be disabled otherwise-->
+                                <button disabled ='disabled' v-else>Add to cart</button>
+                            </div>
+                            <div V-else>
+                                <p>We have run out of spaces, Please check later.</p>
+                            </div> 
+                        </main>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script type="text/javascript">
+        var webstore = new Vue({
+            el: '#app',
+            data: {
+                showProduct: true,
+                sitename:'After School Club',
+                store: [], //array to store items in shopping cart,
+                product: {
+                    id: 001,
+                    title: "Math",
+                    description: "Mathematics is widely known and used in our everyday lives, we would put you through and help you understand it better.",
+                    price: 2000,
+                    location: "Valletta",
+                    image: "images/product-maths.jpg",
+                    availableInventory: 5
+                },
+            cart: [] //creation of an empty array called cart
+            },
+            methods: {
+                addToCart: function(){
+                    console.log('test');
+                    console.log(this.store);
+                    // product id (in this case is 1001) will be stored in the cart array
+                    this.cart.push(this.product.id);
+                },
+                showCheckout: function(){
+                    this.showProduct = this.showProduct ? false : true;
+                },
+                submitForm(){
+                    alert('Order has been placed');
+                }
+            },
+            computed: {
+                cartItemCount: function(){
+                    return this.cart.length || '';
+                },
+                canAddToCart: function(){
+                    return this.product.availableInventory > this.cartItemCount;
+                }
+            }
+            
+        });
+    </script>
+</html>
