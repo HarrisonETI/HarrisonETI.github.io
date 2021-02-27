@@ -1,0 +1,16 @@
+{
+    "name" : "My Afterschool Lesson",
+    "short_name" : "afterschool" ,
+    "description" : "A web application for students to shop afterschool lessons" ,
+    "icons" : [ 
+        {
+        "src" : "images/icon.png" ,
+        "sizes" : "512x512" ,
+        "type" : "image/png"
+        } 
+    ],
+    "start_url" : "group.html" ,
+    "display" : "fullscreen" ,
+    "background_color" : "#48406b"
+
+}
